@@ -20,14 +20,14 @@ public class Title : MonoBehaviour {
 	
 	public void NextLine()
     {
-        if (++currentLine <= prologue.Count)
+        if (++currentLine < prologue.Count)
         {
             //move to the next line of the prologue to be displayed
             myText.text = prologue[currentLine];
         } else
         {
             //TODO - when prologue ends, show outline of cthulhu, and then title screen
-            anim.speed = 0;
+            anim.SetTrigger("Reveal");
         }
     }
 }
