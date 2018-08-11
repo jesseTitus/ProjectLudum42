@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour {
     GameObject priestCurrentCard;
 
     bool hasDrawnCards = false;
+    bool isEnemyRound = false;
+    bool isPlayerRound = false;
+
+    int hoodedHitPoints = 5;
 
     private enum States
     {
@@ -39,10 +43,10 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         textDisplayer = GameObject.Find("TextDisplayer").GetComponent<Text>();
-        charactersHealth.Add(10f);
-        charactersHealth.Add(10f);
-        charactersHealth.Add(10f);
-        charactersHealth.Add(10f);
+        charactersHealth.Add(10f); // dective health   
+        charactersHealth.Add(10f); // artist health
+        charactersHealth.Add(10f); // surgeon health
+        charactersHealth.Add(10f); // priest health
 
         detectiveButton = GameObject.Find("DetectiveButton");
         artistButton = GameObject.Find("ArtistButton");
@@ -80,6 +84,12 @@ public class GameManager : MonoBehaviour {
         DisableDecks();
         if (!hasDrawnCards) {
             DrawCards();
+        }
+        if (isEnemyRound) {
+            EnemyActions("hooded");
+        }
+        if (isPlayerRound) {
+            CardAction();
         }
     }
 
@@ -122,13 +132,98 @@ public class GameManager : MonoBehaviour {
         surgeonCurrentCard = surgeonDeck[Random.Range(0, surgeonDeck.Count)];
         priestCurrentCard = priestDeck[Random.Range(0, priestDeck.Count)];
 
-        print("here");
-
         Instantiate(detectiveCurrentCard, detectivePosition);
         Instantiate(artistCurrentCard, artistPosition);
         Instantiate(surgeonCurrentCard, surgeonPosition);
         Instantiate(priestCurrentCard, priestPosition);
 
         hasDrawnCards = true;
+        isEnemyRound = true;
+    }
+
+    private void EnemyActions(string enemy) {
+        if (enemy == "hooded")
+        {
+            int randomNumber = Random.Range(1, 3);
+            if (randomNumber == 1) // enemy will attack
+            {
+                print("attack");
+            }
+            else if (randomNumber == 2) // enemy will attack everyone
+            {
+                print("attack all");
+            }
+            else if (randomNumber == 3) // enemy will heal it self
+            {
+                print("heal itself");
+            }
+        }
+        isEnemyRound = false;
+        isPlayerRound = true;
+    }
+
+    private void CardAction() {
+
+        if (Input.GetMouseButtonDown(0)) {
+            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+
+            if (hit.collider.GetComponent<Antidote>())
+            {
+                print("antidote");
+                RedrawCards();
+            }
+            else if (hit.collider.GetComponent<Bandage>())
+            {
+                print("bandage");
+                RedrawCards();
+            }
+            else if (hit.collider.GetComponent<Bless>())
+            {
+                print("bless");
+                RedrawCards();
+            }
+            else if (hit.collider.GetComponent<Flashlight>())
+            {
+                print("flashlight");
+                RedrawCards();
+            }
+            else if (hit.collider.GetComponent<Revolver>())
+            {
+                print("revolver");
+                RedrawCards();
+            }
+            else if (hit.collider.GetComponent<Sketch>())
+            {
+                print("sketch");
+                RedrawCards();
+            }
+            else {
+            }
+
+        } 
+    }
+
+    private void RedrawCards() {
+        // destroy all current cards
+        foreach (Transform child in detectivePosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in artistPosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in surgeonPosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in priestPosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        isPlayerRound = false;
+        hasDrawnCards = false;
     }
 }
