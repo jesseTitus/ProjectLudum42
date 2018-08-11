@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-    public List<float> charactersHealth = new List<float>(); // a list that contains health of all characters
+    public List<float> charactersCurrentHealth = new List<float>(); // a list that contains health of all characters
+    public List<float> charactersMaxHealth = new List<float>();
     public Text textDisplayer;
     public Button nextButton;
     public GameObject detectiveButton;
@@ -43,10 +44,15 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         textDisplayer = GameObject.Find("TextDisplayer").GetComponent<Text>();
-        charactersHealth.Add(10f); // dective health   
-        charactersHealth.Add(10f); // artist health
-        charactersHealth.Add(10f); // surgeon health
-        charactersHealth.Add(10f); // priest health
+        charactersMaxHealth.Add(10f); // dective health   
+        charactersMaxHealth.Add(10f); // artist health
+        charactersMaxHealth.Add(10f); // surgeon health
+        charactersMaxHealth.Add(10f); // priest health
+
+        charactersCurrentHealth.Add(charactersMaxHealth[0]); // dective health   
+        charactersCurrentHealth.Add(charactersMaxHealth[1]); // artist health
+        charactersCurrentHealth.Add(charactersMaxHealth[2]); // surgeon health
+        charactersCurrentHealth.Add(charactersMaxHealth[3]); // priest health
 
         detectiveButton = GameObject.Find("DetectiveButton");
         artistButton = GameObject.Find("ArtistButton");
