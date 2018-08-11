@@ -8,6 +8,27 @@ public class GameManager : MonoBehaviour {
     public List<float> charactersHealth = new List<float>(); // a list that contains health of all characters
     public Text textDisplayer;
     public Button nextButton;
+    public GameObject detectiveButton;
+    public GameObject artistButton;
+    public GameObject surgeonButton;
+    public GameObject priestButton;
+
+    public List<GameObject> detectiveDeck;
+    public List<GameObject> artistDeck;
+    public List<GameObject> surgeonDeck;
+    public List<GameObject> priestDeck;
+
+    public Transform detectivePosition;
+    public Transform artistPosition;
+    public Transform surgeonPosition;
+    public Transform priestPosition;
+
+    GameObject detectiveCurrentCard;
+    GameObject artistCurrentCard;
+    GameObject surgeonCurrentCard;
+    GameObject priestCurrentCard;
+
+    bool hasDrawnCards = false;
 
     private enum States
     {
@@ -22,6 +43,16 @@ public class GameManager : MonoBehaviour {
         charactersHealth.Add(10f);
         charactersHealth.Add(10f);
         charactersHealth.Add(10f);
+
+        detectiveButton = GameObject.Find("DetectiveButton");
+        artistButton = GameObject.Find("ArtistButton");
+        surgeonButton = GameObject.Find("SurgeonButton");
+        priestButton = GameObject.Find("PriestButton");
+
+        detectivePosition = GameObject.Find("DetectivePosition").transform;
+        artistPosition = GameObject.Find("ArtistPosition").transform;
+        surgeonPosition = GameObject.Find("SurgeonPosition").transform;
+        priestPosition = GameObject.Find("PriestPosition").transform;
 
         myState = States.Intro1;
     }
@@ -46,7 +77,10 @@ public class GameManager : MonoBehaviour {
 
     void Combat1() {
         textDisplayer.text = "hooded figure move to attack.";
-        
+        DisableDecks();
+        if (!hasDrawnCards) {
+            DrawCards();
+        }
     }
 
     void Pass1() {
@@ -70,5 +104,31 @@ public class GameManager : MonoBehaviour {
     public void OpinionPriest()
     {
         if (myState == States.Opinions1) { myState = States.Pass1; }
+    }
+
+    private void DisableDecks()
+    {
+        detectiveButton.SetActive(false);
+        artistButton.SetActive(false);
+        surgeonButton.SetActive(false);
+        priestButton.SetActive(false);
+    }
+
+    private void DrawCards()
+    {
+        print(detectiveDeck.Count);
+        detectiveCurrentCard = detectiveDeck[Random.Range(0, detectiveDeck.Count)];
+        artistCurrentCard = artistDeck[Random.Range(0, artistDeck.Count)];
+        surgeonCurrentCard = surgeonDeck[Random.Range(0, surgeonDeck.Count)];
+        priestCurrentCard = priestDeck[Random.Range(0, priestDeck.Count)];
+
+        print("here");
+
+        Instantiate(detectiveCurrentCard, detectivePosition);
+        Instantiate(artistCurrentCard, artistPosition);
+        Instantiate(surgeonCurrentCard, surgeonPosition);
+        Instantiate(priestCurrentCard, priestPosition);
+
+        hasDrawnCards = true;
     }
 }
