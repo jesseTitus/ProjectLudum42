@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour {
 
     public Text myText;          //actual text onscreen
     public List<string> prologue;   //a list of lines to feed the prologue before the main menu hits
-    public AudioSource audioPlayer;
+    public string titleScreen;
 
     int currentLine = 0;    //current line the prologue is on
     Animator anim;      //to control which fade-in / fade-out if needed
@@ -33,9 +34,16 @@ public class Title : MonoBehaviour {
         }
     }
 
-    public void PlaySound()
+    public void GoToNextScene()
     {
-        //Play lightning strike noise (on cthulhu reveal)
-        audioPlayer.Play();
+        SceneManager.LoadScene(titleScreen);
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            GoToNextScene();
+        }
     }
 }
