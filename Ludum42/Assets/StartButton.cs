@@ -28,7 +28,7 @@ public class StartButton : MonoBehaviour {
     {
         //Highlight
         spriteRenderer.color = higlight;
-        if (!highlighted)
+        if (!highlighted && !activated)
         {
             highlighted = true;
             AudioSource.PlayClipAtPoint(highlightNoise, Vector3.zero);
@@ -38,8 +38,11 @@ public class StartButton : MonoBehaviour {
     void OnMouseExit()
     {
         //unhightlight
-        spriteRenderer.color = unhighlight;
-        highlighted = false;
+        if (!activated)
+        {
+            spriteRenderer.color = unhighlight;
+            highlighted = false;
+        }
     }
 
     public void Activate()
