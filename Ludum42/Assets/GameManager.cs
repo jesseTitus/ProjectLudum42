@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour {
     bool isEnemyRound = false;
     bool isPlayerRound = false;
 
+    bool isDetectiveAlive = true;
+    bool isArtistAlive = true;
+    bool isSurgeonAlive = true;
+    bool isPriestAlive = true;
+
     int hoodedHitPoints = 5;
 
     private enum States
@@ -88,6 +93,7 @@ public class GameManager : MonoBehaviour {
     void Combat1() {
         textDisplayer.text = "hooded figure move to attack.";
         DisableDecks();
+        CheckAlive();
         if (!hasDrawnCards) {
             DrawCards();
         }
@@ -170,39 +176,58 @@ public class GameManager : MonoBehaviour {
 
     private void CardAction() {
 
+
         if (Input.GetMouseButtonDown(0)) {
             Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
             if (hit.collider.GetComponent<Antidote>())
             {
-                print("antidote");
-                RedrawCards();
+                if (isSurgeonAlive)
+                {
+                    print("antidote");
+                    RedrawCards();
+                }
             }
             else if (hit.collider.GetComponent<Bandage>())
             {
-                print("bandage");
-                RedrawCards();
+                if (isSurgeonAlive)
+                {
+                    print("bandage");
+                    RedrawCards();
+                }
             }
             else if (hit.collider.GetComponent<Bless>())
             {
-                print("bless");
-                RedrawCards();
+                if (isPriestAlive)
+                {
+                    print("bless");
+                    RedrawCards();
+                } 
             }
             else if (hit.collider.GetComponent<Flashlight>())
             {
-                print("flashlight");
-                RedrawCards();
+                if (isDetectiveAlive)
+                {
+                    print("flashlight");
+                    RedrawCards();
+                }
             }
             else if (hit.collider.GetComponent<Revolver>())
             {
-                print("revolver");
-                RedrawCards();
+                if (isDetectiveAlive)
+                {
+                    print("revolver");
+                    RedrawCards();
+                }
             }
             else if (hit.collider.GetComponent<Sketch>())
             {
-                print("sketch");
-                RedrawCards();
+                if (isArtistAlive)
+                {
+                    print("sketch");
+                    RedrawCards();
+                }
             }
             else {
             }
@@ -232,4 +257,55 @@ public class GameManager : MonoBehaviour {
         isPlayerRound = false;
         hasDrawnCards = false;
     }
+
+    void CheckAlive (){
+        if (charactersCurrentHealth[0] <= 0) // if detective is died
+        {
+            isDetectiveAlive = false; // set is alive to false
+            detectiveButton.SetActive(true); // use character sprite to cover cards
+            detectiveButton.GetComponent<Image>().color = Color.red; // set color to red
+        }
+        else {
+            isDetectiveAlive = true;
+            detectiveButton.SetActive(false);
+            detectiveButton.GetComponent<Image>().color = Color.white;
+        }
+        if (charactersCurrentHealth[1] <= 0)
+        {
+            isArtistAlive = false;
+            artistButton.SetActive(true);
+            artistButton.GetComponent<Image>().color = Color.red;
+        }
+        else
+        {
+            isArtistAlive = true;
+            artistButton.SetActive(false);
+            artistButton.GetComponent<Image>().color = Color.white;
+        }
+        if (charactersCurrentHealth[2] <= 0)
+        {
+            isSurgeonAlive = false;
+            surgeonButton.SetActive(true);
+            surgeonButton.GetComponent<Image>().color = Color.red;
+        }
+        else
+        {
+            isSurgeonAlive = true;
+            surgeonButton.SetActive(false);
+            surgeonButton.GetComponent<Image>().color = Color.white;
+        }
+        if (charactersCurrentHealth[3] <= 0)
+        {
+            isPriestAlive = false;
+            priestButton.SetActive(true);
+            priestButton.GetComponent<Image>().color = Color.red;
+        }
+        else
+        {
+            isPriestAlive = true;
+            priestButton.SetActive(false);
+            priestButton.GetComponent<Image>().color = Color.white;
+        }
+    }
+
 }
