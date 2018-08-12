@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flashlight : MonoBehaviour {
+public class Sacrifice : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bless : MonoBehaviour {
+public class Sawlimb : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

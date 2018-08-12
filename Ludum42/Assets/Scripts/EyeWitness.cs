@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Antidote : MonoBehaviour {
+public class EyeWitness : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

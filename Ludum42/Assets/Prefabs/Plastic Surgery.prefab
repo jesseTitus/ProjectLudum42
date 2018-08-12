@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4539060019243276}
   - component: {fileID: 212248922618317228}
   - component: {fileID: 61610668584776508}
-  - component: {fileID: 114387087827639498}
+  - component: {fileID: 114713096161781938}
   m_Layer: 0
-  m_Name: Bandage
+  m_Name: Plastic Surgery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.532, y: 2.204}
+    oldSize: {x: 1.524, y: 2.204}
     newSize: {x: 76.6, y: 110.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.532, y: 2.204}
   m_EdgeRadius: 0
---- !u!114 &114387087827639498
+--- !u!114 &114713096161781938
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1081122272142878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36d978d74ae9a894194080e4b27d88b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2afb62ec2d1e7044387f98805f9854bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212248922618317228
@@ -113,7 +113,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0067402efcf6c1e419fdf2bda441c25b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b3b9012fff45be3489970dba89eb627a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

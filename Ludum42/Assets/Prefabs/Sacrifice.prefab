@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4539060019243276}
   - component: {fileID: 212248922618317228}
   - component: {fileID: 61610668584776508}
-  - component: {fileID: 114439152827859888}
+  - component: {fileID: 114055159607788500}
   m_Layer: 0
-  m_Name: Sketch
+  m_Name: Sacrifice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.532, y: 2.204}
   m_EdgeRadius: 0
---- !u!114 &114439152827859888
+--- !u!114 &114055159607788500
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1081122272142878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f4a2130edd95cc4e88637cdb5306284, type: 3}
+  m_Script: {fileID: 11500000, guid: 548653eec25d76e4ea20e1e39f57dffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212248922618317228
@@ -113,7 +113,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 28bb122ea468227489e2c5dff07f879f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4bc0596b62e214845938b594e0f27a51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

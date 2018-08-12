@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Revolver : MonoBehaviour {
+public class Erase : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
