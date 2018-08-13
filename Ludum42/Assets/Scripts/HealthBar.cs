@@ -41,13 +41,13 @@ public class HealthBar : MonoBehaviour {
         }
 
 
-        if (slider.value > 0.4)
-        {
-            fill.color = Color.white;
-        }
-        else {
-            fill.color = Color.red;
-        }
+        //if (slider.value > 0.4)       //made BG red so this is irrelevant
+        //{
+        //    fill.color = Color.white;
+        //}
+        //else {
+        //    fill.color = Color.red;
+        //}
 
     }
 }
