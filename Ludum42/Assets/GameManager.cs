@@ -319,7 +319,7 @@ public class GameManager : MonoBehaviour {
 
     void WomanHint1() {
         textDisplayer.text = "Ledwell bandages the woman's wounds. She is dying. \n" +
-            "Woman: Who would do that? Just hurt someone for no reason? All I did was hum...	//HINT - Enemy is blind";
+            "Woman: Who would do that? Just hurt someone for no reason? All I did was hum...";
     }
 
     void WomanHint2()
