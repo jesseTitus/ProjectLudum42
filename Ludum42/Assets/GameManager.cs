@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     #region jesse
     public Music musicPlayer;
     public SoundEffects soundFXPlayer;
+    bool goodEnding;
     #endregion
 
     public List<float> charactersCurrentHealth = new List<float>(); // a list that contains health of all characters
@@ -129,6 +131,11 @@ public class GameManager : MonoBehaviour {
 
     public void Next()
     {
+        //Jesse
+        if (myState == States.Combat1 || myState == States.Combat2) musicPlayer.ChangeMusic(true);          // Combat begins - start combat music
+        if (myState == States.CombatEnd1 || myState == States.CombatEnd2) musicPlayer.ChangeMusic(false);   // Combat ends - switch music (TODO - fix timing)
+
+
         if (myState == States.Intro1) { myState = States.Intro2; }
         else if (myState == States.Intro2) { myState = States.Intro3; }
         else if (myState == States.Intro3) { myState = States.Intro4; }
@@ -157,20 +164,34 @@ public class GameManager : MonoBehaviour {
         {
             print(hearLedwell);
             print(isWomanDied);
-            if (!hearLedwell && !isWomanDied) {
+            if (!hearLedwell && !isWomanDied)
+            {
                 myState = States.ArtistLive1;
-            } else {
+                goodEnding = true;
+            }
+            else
+            {
                 myState = States.ArtistDied1;
+                goodEnding = false;
             }
         }
         else if (myState == States.ArtistLive1) { myState = States.ArtistLive2; }
         else if (myState == States.ArtistLive2) { myState = States.Combat2; }
         else if (myState == States.ArtistDied1) { myState = States.ArtistDied2; }
         else if (myState == States.ArtistDied2) { myState = States.Combat2; }
-
-        //Jesse
-        if (myState == States.Combat1 || myState == States.Combat2) musicPlayer.ChangeMusic(true);
-        if (myState == States.CombatEnd1 || myState == States.CombatEnd2) musicPlayer.ChangeMusic(false);
+        else
+        {
+            // GAME COMPLETE - give player ending
+            if (goodEnding)
+            {
+                SceneManager.LoadScene("GoodEnding");
+            }
+            else
+            {
+                SceneManager.LoadScene("BadEnding");
+            }
+        }
+        
     }
 
     void Intro1() {
