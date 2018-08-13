@@ -53,6 +53,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicPlayer: {fileID: 0}
   soundFXPlayer: {fileID: 0}
+  choice1: {fileID: 0}
+  choice2: {fileID: 0}
   charactersCurrentHealth: []
   charactersMaxHealth: []
   textDisplayer: {fileID: 0}

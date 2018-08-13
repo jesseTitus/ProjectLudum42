@@ -334,6 +334,48 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114504746766139040, guid: 28ef9682cff48b940a4fc85a72f43bd1,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Credits
+
+        --------
+
+        -Design-
+
+        Lead - Jesse Titus
+
+        @hitagi_tori
+
+        @aexer
+
+        @crimson_coder
+
+
+        -Programming-
+
+        Jesse Titus
+
+        @hitagi_tori
+
+
+        -Art-
+
+        Art Direction: Jesse Titus
+
+        Lead Artist: @teasugarr
+
+        3D Art: @aexer
+
+
+        -Sound-
+
+        Music: David Bergeron
+
+        Sound FX: David Bergeron
+
+        Voice: David Bergeron'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28ef9682cff48b940a4fc85a72f43bd1, type: 2}
   m_IsPrefabAsset: 0

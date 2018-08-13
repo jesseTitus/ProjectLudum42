@@ -57,7 +57,8 @@ public class StartButton : MonoBehaviour {
 
     IEnumerator NextScene()
     {
-        yield return new WaitForSeconds(1.5f); 
+        yield return new WaitForSeconds(0.5f);
+        if (GameSceneName == "Quit") Application.Quit();
         SceneManager.LoadScene(GameSceneName);
         yield return null;
     }

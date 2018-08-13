@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour {
     public Music musicPlayer;
     public SoundEffects soundFXPlayer;
     bool goodEnding;
+
+    public Choice choice1;
+    public Choice choice2;
+
     #endregion
 
     public List<float> charactersCurrentHealth = new List<float>(); // a list that contains health of all characters
@@ -132,8 +136,8 @@ public class GameManager : MonoBehaviour {
     public void Next()
     {
         //Jesse
-        if (myState == States.Combat1 || myState == States.Combat2) musicPlayer.ChangeMusic(true);          // Combat begins - start combat music
-        if (myState == States.CombatEnd1 || myState == States.CombatEnd2) musicPlayer.ChangeMusic(false);   // Combat ends - switch music (TODO - fix timing)
+        //if (myState == States.Combat1 || myState == States.Combat2) musicPlayer.ChangeMusic(true);          // Combat begins - start combat music
+        //if (myState == States.CombatEnd1 || myState == States.CombatEnd2) musicPlayer.ChangeMusic(false);   // Combat ends - switch music (TODO - fix timing)
 
 
         if (myState == States.Intro1) { myState = States.Intro2; }
@@ -181,15 +185,16 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.ArtistDied2) { myState = States.Combat2; }
         else
         {
-            // GAME COMPLETE - give player ending
-            if (goodEnding)
-            {
-                SceneManager.LoadScene("GoodEnding");
-            }
-            else
-            {
-                SceneManager.LoadScene("BadEnding");
-            }
+            return;
+            //// GAME COMPLETE - give player ending
+            //if (goodEnding)
+            //{
+            //    SceneManager.LoadScene("GoodEnding");
+            //}
+            //else
+            //{
+            //    SceneManager.LoadScene("BadEnding");
+            //}
         }
         
     }
@@ -342,8 +347,11 @@ public class GameManager : MonoBehaviour {
     }
 
     void Selection1() {
-        textDisplayer.text = "Ledwell: That woman needed our help! \n" +
-            "Darcy: This isn't the time Ledwell!";
+        choice1.Display("Ledwell: That woman needed our help!");
+        choice2.Display("Darcy: This isn't the time Ledwell!");
+        textDisplayer.text = "";
+        //textDisplayer.text = "Ledwell: That woman needed our help! \n" +
+        //    "Darcy: This isn't the time Ledwell!";
     }
 
     void WomanHint1() {
