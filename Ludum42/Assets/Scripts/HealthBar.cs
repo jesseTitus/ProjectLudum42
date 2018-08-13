@@ -7,14 +7,14 @@ public class HealthBar : MonoBehaviour {
 
     GameManager gameManger;
     Slider slider;
-    Image fill;
+    //Image fill;       //HP BG now red, so this is redundant
 
 	// Use this for initialization
 	void Start () {
         gameManger = GameObject.Find("GameManager").GetComponent<GameManager>();
         slider = this.GetComponent<Slider>();
 
-        fill = transform.Find("Fill").GetComponent<Image>();
+        //fill = transform.Find("Fill").GetComponent<Image>();  //replaced
 	}
 	
 	// Update is called once per frame
