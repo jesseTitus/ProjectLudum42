@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour {
 
     public int bossHitPoints = 5;
 
+    bool cardActionText = false;
+
     private enum States
     {
         Intro1, Intro2, Intro3, Intro4, Intro5, Intro6, Intro7,
@@ -150,6 +152,13 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.Ending) { Ending(); }
 
         CheckGameOver();
+        if (cardActionText)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else {
+            Cursor.lockState = CursorLockMode.None;
+        }
         
     }
 
@@ -584,7 +593,9 @@ public class GameManager : MonoBehaviour {
                     charactersCurrentHealth[1] += 1;
                     charactersCurrentHealth[2] += 1;
                     charactersCurrentHealth[3] += 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText",1);
+                    //RedrawCards();
                 }
             }
             else if (hit.collider.GetComponent<PlasticSurgery>())
@@ -596,7 +607,9 @@ public class GameManager : MonoBehaviour {
                     charactersCurrentHealth[1] += 1;
                     charactersCurrentHealth[2] += 1;
                     charactersCurrentHealth[3] += 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText",1 );
+                    //RedrawCards();
                 }
             }
             else if (hit.collider.GetComponent<Sawlimb>())
@@ -605,7 +618,8 @@ public class GameManager : MonoBehaviour {
                 {
                     textDisplayer.text = "Sawlimb";
                     bossHitPoints -= 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 1);
                 }
             }
             else if (hit.collider.GetComponent<FalseIdol>())
@@ -614,7 +628,8 @@ public class GameManager : MonoBehaviour {
                 {
                     textDisplayer.text = "False Idol";
                     bossHitPoints -= 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 1);
                 }
             }
             else if (hit.collider.GetComponent<Sacrifice>())
@@ -623,7 +638,8 @@ public class GameManager : MonoBehaviour {
                 {
                     textDisplayer.text = "Sacrifice";
                     bossHitPoints -= 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 1);
                 }
             }
             else if (hit.collider.GetComponent<EyeWitness>())
@@ -633,7 +649,8 @@ public class GameManager : MonoBehaviour {
                 {
                     textDisplayer.text = "EyeWitness";
                     bossHitPoints -= 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 1);
                 }
             }
             else if (hit.collider.GetComponent<Spy>())
@@ -642,7 +659,8 @@ public class GameManager : MonoBehaviour {
                 {
                     textDisplayer.text = "Spy";
                     bossHitPoints -= 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 1);
                 }
             }
             else if (hit.collider.GetComponent<Investigate>())
@@ -651,7 +669,8 @@ public class GameManager : MonoBehaviour {
                 {
                     textDisplayer.text = "Investigate";
                     bossHitPoints -= 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 1);
                 }
             }
             else if (hit.collider.GetComponent<Silhouette>())
@@ -663,7 +682,8 @@ public class GameManager : MonoBehaviour {
                     charactersCurrentHealth[1] += 1;
                     charactersCurrentHealth[2] += 1;
                     charactersCurrentHealth[3] += 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 2);
                 }
             }
             else if (hit.collider.GetComponent<Sketch>())
@@ -675,7 +695,8 @@ public class GameManager : MonoBehaviour {
                     charactersCurrentHealth[1] += 1;
                     charactersCurrentHealth[2] += 1;
                     charactersCurrentHealth[3] += 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 2);
                 }
             }
             else if (hit.collider.GetComponent<Erase>())
@@ -687,7 +708,8 @@ public class GameManager : MonoBehaviour {
                     charactersCurrentHealth[1] += 1;
                     charactersCurrentHealth[2] += 1;
                     charactersCurrentHealth[3] += 1;
-                    RedrawCards();
+                    cardActionText = true;
+                    Invoke("CardActionText", 2);
                 }
             }
             else {
@@ -836,5 +858,12 @@ public class GameManager : MonoBehaviour {
         dText = priestPosition.transform.GetChild(0).ToString();
         foundB = dText.IndexOf("(");
         priestCardText.text = dText.Substring(0, foundB);
+    }
+
+    void CardActionText()
+    {
+        cardActionText = false;
+        Cursor.lockState = CursorLockMode.None;
+        RedrawCards();
     }
 }
