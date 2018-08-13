@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -180,9 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.21
-  m_Text: 'Paranormal Investigations:
-
-    The Darkness'
+  m_Text: Game Over
 --- !u!222 &40529346
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -205,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &135694313
 AudioSource:
   m_ObjectHideFlags: 0
@@ -530,8 +528,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 281, y: 142}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 349, y: 129}
+  m_SizeDelta: {x: 123.7, y: 123.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1605337397
 MonoBehaviour:
@@ -545,14 +543,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.2784314}
+  m_Color: {r: 1, g: 0.25, b: 0.25, a: 0.2784314}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 68a275e084554ef48b98670f8bbe4970, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ee93d074c36f1d94e8736c7e0b3996b6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -681,7 +679,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4567628377090450, guid: c187ae564ad37864596703e302450bbc, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 212790734900747688, guid: c187ae564ad37864596703e302450bbc,
         type: 2}
@@ -702,76 +700,23 @@ Prefab:
         type: 2}
       propertyPath: m_Color.b
       value: 0.3301887
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351828644472530, guid: c187ae564ad37864596703e302450bbc, type: 2}
+      propertyPath: m_Name
+      value: RETRY
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277645174434370, guid: c187ae564ad37864596703e302450bbc,
+        type: 2}
+      propertyPath: m_Text
+      value: Retry
       objectReference: {fileID: 0}
     - target: {fileID: 114338058117551268, guid: c187ae564ad37864596703e302450bbc,
         type: 2}
       propertyPath: GameSceneName
-      value: Game
+      value: Title
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c187ae564ad37864596703e302450bbc, type: 2}
-  m_IsPrefabAsset: 0
---- !u!1001 &1846829561
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -1.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -2.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756446794641746, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 212344275978248324, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7,
-        type: 2}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212344275978248324, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.3301887
-      objectReference: {fileID: 0}
-    - target: {fileID: 212344275978248324, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.3301887
-      objectReference: {fileID: 0}
-    - target: {fileID: 212344275978248324, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.3301887
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2fdcad78aa70d4d4dbcdf008f3d60ca7, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1858179469
 GameObject:
