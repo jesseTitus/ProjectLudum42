@@ -9,12 +9,14 @@ public class Choice : MonoBehaviour {
 
     public AudioClip highlightSnd;
     public AudioClip clickSnd;
+    public bool availableChoice;
 
     Text mytext;
     AudioSource soundPlayer;
 
     //Hideables
     public GameObject button;
+    public GameObject otherButton;  //simple way to hide both...
 
 	void Awake () {
         mytext = GetComponentInChildren<Text>();
@@ -29,10 +31,33 @@ public class Choice : MonoBehaviour {
 
     public void Choose()
     {
+        Debug.Log("Choice made!!!");
         soundPlayer.clip = clickSnd;
         soundPlayer.Play();
 
-        //TODO - send message back to gamemanager to continue
+        // Reply to game manager 
+        if (mytext.text.Contains("Darcy"))
+        {
+            gameManager.OpinionDetective();
+        }
+        else if (mytext.text.Contains("Ledwell"))
+        {
+
+            gameManager.OpinionSurgeon();
+        }
+        else if (mytext.text.Contains("Talbot"))
+        {
+
+            gameManager.OpinionArtist();
+        }
+        else if (mytext.text.Contains("Mason"))
+        {
+
+            gameManager.OpinionPriest();
+        }
+
+        // Choice COMPLETE
+        Hide();
     }
 
     void OnMouseOver()
@@ -45,6 +70,7 @@ public class Choice : MonoBehaviour {
 
     public void Display(string choiceTxt)
     {
+        availableChoice = true; //for next button click sound - checking
         button.SetActive(true);
 
         mytext.text = choiceTxt;
@@ -52,6 +78,8 @@ public class Choice : MonoBehaviour {
 
     public void Hide()
     {
+        availableChoice = false;
+        otherButton.SetActive(false);
         button.SetActive(false);
     }
 }

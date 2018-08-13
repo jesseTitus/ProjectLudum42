@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public Choice choice1;
     public Choice choice2;
 
+
     #endregion
 
     public List<float> charactersCurrentHealth = new List<float>(); // a list that contains health of all characters
@@ -48,8 +49,8 @@ public class GameManager : MonoBehaviour {
     bool isSurgeonAlive = true;
     bool isPriestAlive = true;
 
-    bool isWomanDied = false;
-    bool hearLedwell = false;
+    public bool isWomanDied = false;
+    public bool hearLedwell = false;
 
     public int bossHitPoints = 5;
 
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour {
         ArtistLive1, ArtistLive2,
         Combat2, Epliogue1,
         ArtistDied1, ArtistDied2,
+        Ending
     }
     private States myState;
 
@@ -94,11 +96,13 @@ public class GameManager : MonoBehaviour {
         nextButton = GameObject.Find("NextButton").GetComponent<Button>();
 
         myState = States.Intro1;
+
+
     }
 
     // Update is called once per frame
     void Update() {
-        print(myState);
+        //print(myState);
         if (myState == States.Intro1) { Intro1(); }
         else if (myState == States.Intro2) { Intro2(); }
         else if (myState == States.Intro3) { Intro3(); }
@@ -128,9 +132,23 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.Selection2) { Selection2(); }
         else if (myState == States.NextCabin2) { NextCabin2(); }
         else if (myState == States.ArtistLive1) { ArtistLive1(); }
-        else if (myState == States.ArtistLive2) { ArtistLive2(); }
+        else if (myState == States.ArtistLive2) { ArtistLive2(); } 
+        else if (myState == States.ArtistDied1) { ArtistDied1(); }
+        else if (myState == States.ArtistDied2) { ArtistDied2(); }
         else if (myState == States.Combat2) { Combat2(); }
         else if (myState == States.Epliogue1) { Epilogue1(); }
+        else if (myState == States.Ending) { Ending(); }
+    }
+
+    void Ending()
+    {
+        if (goodEnding)
+        {
+            SceneManager.LoadScene("GoodEnding");
+        } else if (!goodEnding)
+        {
+            SceneManager.LoadScene("BadEnding");
+        }
     }
 
     public void Next()
@@ -166,8 +184,8 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.NextCabin) { myState = States.Selection2; }
         else if (myState == States.NextCabin2)
         {
-            print(hearLedwell);
-            print(isWomanDied);
+            print("Ledwell spoke? " + hearLedwell);
+            print("Woman spoke? " + isWomanDied);
             if (!hearLedwell && !isWomanDied)
             {
                 myState = States.ArtistLive1;
@@ -178,24 +196,13 @@ public class GameManager : MonoBehaviour {
                 myState = States.ArtistDied1;
                 goodEnding = false;
             }
+            print(myState);
         }
         else if (myState == States.ArtistLive1) { myState = States.ArtistLive2; }
         else if (myState == States.ArtistLive2) { myState = States.Combat2; }
         else if (myState == States.ArtistDied1) { myState = States.ArtistDied2; }
         else if (myState == States.ArtistDied2) { myState = States.Combat2; }
-        else
-        {
-            return;
-            //// GAME COMPLETE - give player ending
-            //if (goodEnding)
-            //{
-            //    SceneManager.LoadScene("GoodEnding");
-            //}
-            //else
-            //{
-            //    SceneManager.LoadScene("BadEnding");
-            //}
-        }
+        else if (myState == States.Epliogue1) { myState = States.Ending; }
         
     }
 
@@ -350,7 +357,7 @@ public class GameManager : MonoBehaviour {
         choice1.Display("Ledwell: That woman needed our help!");
         choice2.Display("Darcy: This isn't the time Ledwell!");
         textDisplayer.text = "";
-        //textDisplayer.text = "Ledwell: That woman needed our help! \n" +
+        //textDisplayer.text = "Ledwell: That woman needed our help! \n" + 
         //    "Darcy: This isn't the time Ledwell!";
     }
 
@@ -369,9 +376,13 @@ public class GameManager : MonoBehaviour {
             "Ledwell: We need to talk right now about what just happened.";
     }
 
-    void Selection2() {
-        textDisplayer.text = "Darcy: I won't hear another word. \n" +
-            "Talbot: Hear her out please.";
+    void Selection2()
+    {
+        choice1.Display("Darcy: I won't hear another word. \n");
+        choice2.Display("Talbot: Hear her out please.");
+        textDisplayer.text = "";
+        //textDisplayer.text = "Darcy: I won't hear another word. \n" +     // just no...
+        //    "Talbot: Hear her out please.";
     }
 
     void NextCabin2()
@@ -432,35 +443,43 @@ public class GameManager : MonoBehaviour {
     {
         textDisplayer.text = "Talbot: Aaaaaaah! \n" +
             "Talbot's eyes are gouged out and he drops to his knees.";
-        charactersCurrentHealth[2] = 0;
+        charactersCurrentHealth[1] = 0;
     }
 
     public void OpinionDetective()
     {
+        print("Detective choice during: " + myState);
         if (myState == States.Selection1)
         {
             isWomanDied = true;
+            print("isWomanDied? " + isWomanDied);
             myState = States.NextCabin;
         }
         if (myState == States.Selection2)
         {
+            print("Ignored Ledwell");
             hearLedwell = false;
             myState = States.NextCabin2;
         }
     }
     public void OpinionArtist()
     {
+        print("Artist choice during: " + myState);
         if (myState == States.Selection2)
         {
+            print("Surgeon makes noise");
             hearLedwell = true;
             myState = States.NextCabin2;
         }
     }
     public void OpinionSurgeon()
     {
+        print("Surgeon choice during: " + myState);
         if (myState == States.Selection1)
         {
+            print("Woman speaks");
             isWomanDied = false;
+            print("isWomanDied? " + isWomanDied);
             myState = States.WomanHint1;
         }
     }
@@ -478,7 +497,7 @@ public class GameManager : MonoBehaviour {
 
     private void DrawCards()
     {
-        print(detectiveDeck.Count);
+        //print(detectiveDeck.Count);
         detectiveCurrentCard = detectiveDeck[Random.Range(0, detectiveDeck.Count)];
         artistCurrentCard = artistDeck[Random.Range(0, artistDeck.Count)];
         surgeonCurrentCard = surgeonDeck[Random.Range(0, surgeonDeck.Count)];
