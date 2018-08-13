@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Prologue.unity
     guid: c5192a9a644438e4abfe536dfeaa9adb
   - enabled: 1
+    path: Assets/Scenes/Letter.unity
+    guid: d452d458a53baee48b6896de7d35bf02
+  - enabled: 1
     path: Assets/Scenes/Title.unity
     guid: cf46ec5092fb15e459a7c2cbfb7595cb
   - enabled: 1

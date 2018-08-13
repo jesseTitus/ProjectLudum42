@@ -706,7 +706,7 @@ Prefab:
     - target: {fileID: 114338058117551268, guid: c187ae564ad37864596703e302450bbc,
         type: 2}
       propertyPath: GameSceneName
-      value: Game
+      value: Letter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c187ae564ad37864596703e302450bbc, type: 2}
