@@ -38,19 +38,28 @@ public class GameManager : MonoBehaviour {
     bool isSurgeonAlive = true;
     bool isPriestAlive = true;
 
-    int hoodedHitPoints = 5;
+    bool isWomanDied = false;
+    bool hearLedwell = false;
+
+    public int bossHitPoints = 5;
 
     private enum States
     {
         Intro1, Intro2, Intro3, Intro4, Intro5, Intro6, Intro7,
         Rear1, Rear2, Rear3, Rear4, Rear5, Rear6, Rear7, Rear8,
         Original1, Original2, Original3, Original4,
-        Opinions1, Combat1, Pass1
+        Combat1,
+        CombatEnd1, CombatEnd2, Selection1, WomanHint1, WomanHint2,
+        NextCabin, NextCabin2,
+        Selection2,
+        ArtistLive1, ArtistLive2,
+        Combat2, Epliogue1,
+        ArtistDied1, ArtistDied2,
     }
     private States myState;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         textDisplayer = GameObject.Find("TextDisplayer").GetComponent<Text>();
         charactersMaxHealth.Add(10f); // dective health   
         charactersMaxHealth.Add(10f); // artist health
@@ -76,9 +85,9 @@ public class GameManager : MonoBehaviour {
 
         myState = States.Intro1;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         print(myState);
         if (myState == States.Intro1) { Intro1(); }
         else if (myState == States.Intro2) { Intro2(); }
@@ -99,9 +108,19 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.Original2) { Original2(); }
         else if (myState == States.Original3) { Original3(); }
         else if (myState == States.Original4) { Original4(); }
-        else if (myState == States.Opinions1) { Opinions1(); }
-        else if (myState == States.Pass1) { Pass1(); }
         else if (myState == States.Combat1) { Combat1(); }
+        else if (myState == States.CombatEnd1) { CombatEnd1(); }
+        else if (myState == States.CombatEnd2) { CombatEnd2(); }
+        else if (myState == States.Selection1) { Selection1(); }
+        else if (myState == States.WomanHint1) { WomanHint1(); }
+        else if (myState == States.WomanHint2) { WomanHint2(); }
+        else if (myState == States.NextCabin) { NextCabin(); }
+        else if (myState == States.Selection2) { Selection2(); }
+        else if (myState == States.NextCabin2) { NextCabin2(); }
+        else if (myState == States.ArtistLive1) { ArtistLive1(); }
+        else if (myState == States.ArtistLive2) { ArtistLive2(); }
+        else if (myState == States.Combat2) { Combat2(); }
+        else if (myState == States.Epliogue1) { Epilogue1(); }
     }
 
     public void Next()
@@ -125,6 +144,25 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.Original2) { myState = States.Original3; }
         else if (myState == States.Original3) { myState = States.Original4; }
         else if (myState == States.Original4) { myState = States.Combat1; }
+        else if (myState == States.CombatEnd1) { myState = States.CombatEnd2; }
+        else if (myState == States.CombatEnd2) { myState = States.Selection1; }
+        else if (myState == States.WomanHint1) { myState = States.WomanHint2; }
+        else if (myState == States.WomanHint2) { myState = States.NextCabin; }
+        else if (myState == States.NextCabin) { myState = States.Selection2; }
+        else if (myState == States.NextCabin2)
+        {
+            print(hearLedwell);
+            print(isWomanDied);
+            if (!hearLedwell && !isWomanDied) {
+                myState = States.ArtistLive1;
+            } else {
+                myState = States.ArtistDied1;
+            }
+        }
+        else if (myState == States.ArtistLive1) { myState = States.ArtistLive2; }
+        else if (myState == States.ArtistLive2) { myState = States.Combat2; }
+        else if (myState == States.ArtistDied1) { myState = States.ArtistDied2; }
+        else if (myState == States.ArtistDied2) { myState = States.Combat2; }
     }
 
     void Intro1() {
@@ -240,15 +278,10 @@ public class GameManager : MonoBehaviour {
             "Darcy fires his gun at the possessed man.";
     }
 
-    void Opinions1() {
-        textDisplayer.text = "Detective: Let's see the face under that hood. \n" +
-            "Priest: Hold on, let me talk to him first.";
-    }
-
     void Combat1() {
-        textDisplayer.text = "Insert Battle Text Here.";
         DisableDecks();
         CheckAlive();
+
         nextButton.gameObject.SetActive(false);
         if (!hasDrawnCards) {
             DrawCards();
@@ -258,26 +291,144 @@ public class GameManager : MonoBehaviour {
         }
         if (isPlayerRound) {
             CardAction();
+            if (bossHitPoints <= 0)
+            {
+                myState = States.CombatEnd1;
+                ResetCombat();
+                bossHitPoints = 5;
+            }
         }
     }
 
-    void Pass1() {
-        textDisplayer.text = "hooded figure disapeared back into shadow.";
+    void CombatEnd1()
+    {
+        textDisplayer.text = "Darcy: What in god's name was that? \n" +
+            "Ledwell: The physiology is like nothing I've seen!";
+    }
+
+    void CombatEnd2()
+    {
+        textDisplayer.text = "The bloodied woman lies still on the cabin floor. \n" +
+            "The black void has reached the next cabin. The cabin windows begins to shake. ";
+    }
+
+    void Selection1() {
+        textDisplayer.text = "Ledwell: That woman needed our help! \n" +
+            "Darcy: This isn't the time Ledwell!";
+    }
+
+    void WomanHint1() {
+        textDisplayer.text = "Ledwell bandages the woman's wounds. She is dying. \n" +
+            "Woman: Who would do that? Just hurt someone for no reason? All I did was hum...	//HINT - Enemy is blind";
+    }
+
+    void WomanHint2()
+    {
+        textDisplayer.text = "The woman has passed away.";
+    }
+
+    void NextCabin() {
+        textDisplayer.text = "The team proceeds to the next cabin. \n" +
+            "Ledwell: We need to talk right now about what just happened.";
+    }
+
+    void Selection2() {
+        textDisplayer.text = "Darcy: I won't hear another word. \n" +
+            "Talbot: Hear her out please.";
+    }
+
+    void NextCabin2()
+    {
+        textDisplayer.text = "The team proceeds to the next cabin. \n" +
+            "This cabin has a small bathroom. Talbot knocks on the door and opens to check for survivors. ";
+    }
+
+    void ArtistLive1() {
+        textDisplayer.text = "A tall man lunges toward Talbot with his arms stretched out. \n" +
+            "Darcy: Wait!";
+    }
+
+    void ArtistLive2()
+    {
+        textDisplayer.text = "Talbot jumps back.";
+    }
+
+    void Combat2()
+    {
+        DisableDecks();
+        CheckAlive();
+
+        nextButton.gameObject.SetActive(false);
+        if (!hasDrawnCards)
+        {
+            DrawCards();
+        }
+        if (isEnemyRound)
+        {
+            EnemyActions("DemanMan");
+        }
+        if (isPlayerRound)
+        {
+            CardAction();
+            if (bossHitPoints <= 0)
+            {
+                myState = States.Epliogue1;
+                ResetCombat();
+                bossHitPoints = 5;
+            }
+        }
+    }
+
+    void Epilogue1 (){
+        textDisplayer.text = "Close your eyes. \n" +
+            "Close your eyes. \n" +
+            "Close your eyes. And sleep... \n" +
+            "A siren roars.";
+    }
+
+    void ArtistDied1() {
+        textDisplayer.text = "A tall man lunges toward Talbot with his arms stretched out. \n" +
+            "Darcy: Wait!";
+    }
+
+    void ArtistDied2()
+    {
+        textDisplayer.text = "Talbot: Aaaaaaah! \n" +
+            "Talbot's eyes are gouged out and he drops to his knees.";
+        charactersCurrentHealth[2] = 0;
     }
 
     public void OpinionDetective()
     {
-        if (myState == States.Opinions1) { myState = States.Combat1; }
+        if (myState == States.Selection1)
+        {
+            isWomanDied = true;
+            myState = States.NextCabin;
+        }
+        if (myState == States.Selection2)
+        {
+            hearLedwell = false;
+            myState = States.NextCabin2;
+        }
     }
     public void OpinionArtist()
     {
+        if (myState == States.Selection2)
+        {
+            hearLedwell = true;
+            myState = States.NextCabin2;
+        }
     }
     public void OpinionSurgeon()
     {
+        if (myState == States.Selection1)
+        {
+            isWomanDied = false;
+            myState = States.WomanHint1;
+        }
     }
     public void OpinionPriest()
     {
-        if (myState == States.Opinions1) { myState = States.Pass1; }
     }
 
     private void DisableDecks()
@@ -311,15 +462,36 @@ public class GameManager : MonoBehaviour {
             int randomNumber = Random.Range(1, 3);
             if (randomNumber == 1) // enemy will attack
             {
-                print("attack");
+                int target = Random.Range(0, 3);
+                charactersCurrentHealth[target] -= 2;
+                if (target == 0)
+                {
+                    textDisplayer.text = "Creature attacks Darcy.";
+                }
+                else if (target == 1)
+                {
+                    textDisplayer.text = "Creature attacks Talbot.";
+                }
+                else if (target == 2)
+                {
+                    textDisplayer.text = "Creature attacks Ledwell.";
+                }
+                else if (target == 3)
+                {
+                    textDisplayer.text = "Creature attacks Mason.";
+                }
             }
             else if (randomNumber == 2) // enemy will attack everyone
             {
-                print("attack all");
+                textDisplayer.text = "Creature sweeps floor.";
+                charactersCurrentHealth[0] -= 1;
+                charactersCurrentHealth[1] -= 1;
+                charactersCurrentHealth[2] -= 1;
+                charactersCurrentHealth[3] -= 1;
             }
             else if (randomNumber == 3) // enemy will heal it self
             {
-                print("heal itself");
+                bossHitPoints += 1;
             }
         }
         isEnemyRound = false;
@@ -327,7 +499,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void CardAction() {
-
 
         if (Input.GetMouseButtonDown(0)) {
             Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -337,7 +508,11 @@ public class GameManager : MonoBehaviour {
             {
                 if (isSurgeonAlive)
                 {
-                    print("Bandages");
+                    textDisplayer.text = "Bandages";
+                    charactersCurrentHealth[0] += 1;
+                    charactersCurrentHealth[1] += 1;
+                    charactersCurrentHealth[2] += 1;
+                    charactersCurrentHealth[3] += 1;
                     RedrawCards();
                 }
             }
@@ -345,7 +520,11 @@ public class GameManager : MonoBehaviour {
             {
                 if (isSurgeonAlive)
                 {
-                    print("PlasticSurgery");
+                    textDisplayer.text = "Plastic Surgery";
+                    charactersCurrentHealth[0] += 1;
+                    charactersCurrentHealth[1] += 1;
+                    charactersCurrentHealth[2] += 1;
+                    charactersCurrentHealth[3] += 1;
                     RedrawCards();
                 }
             }
@@ -353,7 +532,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (isSurgeonAlive)
                 {
-                    print("Sawlimb");
+                    textDisplayer.text = "Sawlimb";
+                    bossHitPoints -= 1;
                     RedrawCards();
                 }
             }
@@ -361,7 +541,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (isPriestAlive)
                 {
-                    print("FalseIdol");
+                    textDisplayer.text = "False Idol";
+                    bossHitPoints -= 1;
                     RedrawCards();
                 } 
             }
@@ -369,7 +550,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (isPriestAlive)
                 {
-                    print("Sacrifice");
+                    textDisplayer.text = "Sacrifice";
+                    bossHitPoints -= 1;
                     RedrawCards();
                 }
             }
@@ -377,7 +559,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (isDetectiveAlive)
                 {
-                    print("EyeWitness");
+                    textDisplayer.text = "EyeWitness";
+                    bossHitPoints -= 1;
                     RedrawCards();
                 }
             }
@@ -385,7 +568,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (isDetectiveAlive)
                 {
-                    print("Spy");
+                    textDisplayer.text = "Spy";
+                    bossHitPoints -= 1;
                     RedrawCards();
                 }
             }
@@ -393,7 +577,11 @@ public class GameManager : MonoBehaviour {
             {
                 if (isDetectiveAlive)
                 {
-                    print("Silhouette");
+                    textDisplayer.text = "Silhouette";
+                    charactersCurrentHealth[0] += 1;
+                    charactersCurrentHealth[1] += 1;
+                    charactersCurrentHealth[2] += 1;
+                    charactersCurrentHealth[3] += 1;
                     RedrawCards();
                 }
             }
@@ -401,7 +589,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (isArtistAlive)
                 {
-                    print("sketch");
+                    textDisplayer.text = "Sketch";
+                    bossHitPoints -= 1;
                     RedrawCards();
                 }
             }
@@ -409,7 +598,11 @@ public class GameManager : MonoBehaviour {
             {
                 if (isArtistAlive)
                 {
-                    print("Erase");
+                    textDisplayer.text = "Erase";
+                    charactersCurrentHealth[0] += 1;
+                    charactersCurrentHealth[1] += 1;
+                    charactersCurrentHealth[2] += 1;
+                    charactersCurrentHealth[3] += 1;
                     RedrawCards();
                 }
             }
@@ -493,4 +686,34 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void ResetCombat() {
+        foreach (Transform child in detectivePosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in artistPosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in surgeonPosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in priestPosition)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        detectiveButton.SetActive(true);
+        artistButton.SetActive(true);
+        surgeonButton.SetActive(true);
+        priestButton.SetActive(true);
+
+        charactersCurrentHealth[0] = 10;
+        charactersCurrentHealth[1] = 10;
+        charactersCurrentHealth[2] = 10;
+        charactersCurrentHealth[3] = 10;
+
+        nextButton.gameObject.SetActive(true);
+    }
 }
