@@ -138,6 +138,8 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.Combat2) { Combat2(); }
         else if (myState == States.Epliogue1) { Epilogue1(); }
         else if (myState == States.Ending) { Ending(); }
+
+        CheckGameOver();
     }
 
     void Ending()
@@ -771,5 +773,19 @@ public class GameManager : MonoBehaviour {
         charactersCurrentHealth[3] = 10;
 
         nextButton.gameObject.SetActive(true);
+    }
+
+    void CheckGameOver() {
+        bool allDied = true;
+        for (int i = 0; i <= 3; i++)
+        {
+            if (charactersCurrentHealth[i] != 0) {
+                allDied = false;
+                return;
+            }
+        }
+        if (allDied == true) {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }
