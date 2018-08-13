@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+    #region jesse
+    public Music musicPlayer;
+    public SoundEffects soundFXPlayer;
+    #endregion
 
     public List<float> charactersCurrentHealth = new List<float>(); // a list that contains health of all characters
     public List<float> charactersMaxHealth = new List<float>();
@@ -163,6 +167,10 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.ArtistLive2) { myState = States.Combat2; }
         else if (myState == States.ArtistDied1) { myState = States.ArtistDied2; }
         else if (myState == States.ArtistDied2) { myState = States.Combat2; }
+
+        //Jesse
+        if (myState == States.Combat1 || myState == States.Combat2) musicPlayer.ChangeMusic(true);
+        if (myState == States.CombatEnd1 || myState == States.CombatEnd2) musicPlayer.ChangeMusic(false);
     }
 
     void Intro1() {
