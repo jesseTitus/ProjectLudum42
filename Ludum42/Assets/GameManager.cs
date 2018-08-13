@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour {
     GameObject surgeonCurrentCard;
     GameObject priestCurrentCard;
 
+    Text deteciveCardText;
+    Text artistCardText;
+    Text surgeonCardText;
+    Text priestCardText;
+
     bool hasDrawnCards = false;
     bool isEnemyRound = false;
     bool isPlayerRound = false;
@@ -93,6 +98,11 @@ public class GameManager : MonoBehaviour {
         surgeonPosition = GameObject.Find("SurgeonPosition").transform;
         priestPosition = GameObject.Find("PriestPosition").transform;
 
+        deteciveCardText = GameObject.Find("DetectiveCardText").GetComponent<Text>();
+        artistCardText = GameObject.Find("ArtistCardText").GetComponent<Text>();
+        surgeonCardText = GameObject.Find("SurgeonCardText").GetComponent<Text>();
+        priestCardText = GameObject.Find("PriestCardText").GetComponent<Text>();
+
         nextButton = GameObject.Find("NextButton").GetComponent<Button>();
 
         myState = States.Intro1;
@@ -132,7 +142,7 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.Selection2) { Selection2(); }
         else if (myState == States.NextCabin2) { NextCabin2(); }
         else if (myState == States.ArtistLive1) { ArtistLive1(); }
-        else if (myState == States.ArtistLive2) { ArtistLive2(); } 
+        else if (myState == States.ArtistLive2) { ArtistLive2(); }
         else if (myState == States.ArtistDied1) { ArtistDied1(); }
         else if (myState == States.ArtistDied2) { ArtistDied2(); }
         else if (myState == States.Combat2) { Combat2(); }
@@ -140,6 +150,7 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.Ending) { Ending(); }
 
         CheckGameOver();
+        
     }
 
     void Ending()
@@ -205,7 +216,7 @@ public class GameManager : MonoBehaviour {
         else if (myState == States.ArtistDied1) { myState = States.ArtistDied2; }
         else if (myState == States.ArtistDied2) { myState = States.Combat2; }
         else if (myState == States.Epliogue1) { myState = States.Ending; }
-        
+
     }
 
     void Intro1() {
@@ -328,6 +339,7 @@ public class GameManager : MonoBehaviour {
         nextButton.gameObject.SetActive(false);
         if (!hasDrawnCards) {
             DrawCards();
+            DisplayCardNames();
         }
         if (isEnemyRound) {
             EnemyActions("DemanMan");
@@ -429,7 +441,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void Epilogue1 (){
+    void Epilogue1() {
         textDisplayer.text = "Close your eyes. \n" +
             "Close your eyes. \n" +
             "Close your eyes. And sleep... \n" +
@@ -549,6 +561,7 @@ public class GameManager : MonoBehaviour {
             }
             else if (randomNumber == 3) // enemy will heal it self
             {
+                textDisplayer.text = "Creature's wound is healing.";
                 bossHitPoints += 1;
             }
         }
@@ -602,7 +615,7 @@ public class GameManager : MonoBehaviour {
                     textDisplayer.text = "False Idol";
                     bossHitPoints -= 1;
                     RedrawCards();
-                } 
+                }
             }
             else if (hit.collider.GetComponent<Sacrifice>())
             {
@@ -615,6 +628,7 @@ public class GameManager : MonoBehaviour {
             }
             else if (hit.collider.GetComponent<EyeWitness>())
             {
+
                 if (isDetectiveAlive)
                 {
                     textDisplayer.text = "EyeWitness";
@@ -627,6 +641,15 @@ public class GameManager : MonoBehaviour {
                 if (isDetectiveAlive)
                 {
                     textDisplayer.text = "Spy";
+                    bossHitPoints -= 1;
+                    RedrawCards();
+                }
+            }
+            else if (hit.collider.GetComponent<Investigate>())
+            {
+                if (isDetectiveAlive)
+                {
+                    textDisplayer.text = "Investigate";
                     bossHitPoints -= 1;
                     RedrawCards();
                 }
@@ -648,7 +671,10 @@ public class GameManager : MonoBehaviour {
                 if (isArtistAlive)
                 {
                     textDisplayer.text = "Sketch";
-                    bossHitPoints -= 1;
+                    charactersCurrentHealth[0] += 1;
+                    charactersCurrentHealth[1] += 1;
+                    charactersCurrentHealth[2] += 1;
+                    charactersCurrentHealth[3] += 1;
                     RedrawCards();
                 }
             }
@@ -668,7 +694,7 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Card does not exist.");
             }
 
-        } 
+        }
     }
 
     private void RedrawCards() {
@@ -694,7 +720,7 @@ public class GameManager : MonoBehaviour {
         hasDrawnCards = false;
     }
 
-    void CheckAlive (){
+    void CheckAlive() {
         if (charactersCurrentHealth[0] <= 0) // if detective is died
         {
             isDetectiveAlive = false; // set is alive to false
@@ -772,6 +798,11 @@ public class GameManager : MonoBehaviour {
         charactersCurrentHealth[2] = 10;
         charactersCurrentHealth[3] = 10;
 
+        deteciveCardText.text = "";
+        artistCardText.text = "";
+        surgeonCardText.text = "";
+        priestCardText.text = "";
+
         nextButton.gameObject.SetActive(true);
     }
 
@@ -787,5 +818,23 @@ public class GameManager : MonoBehaviour {
         if (allDied == true) {
             SceneManager.LoadScene("GameOver");
         }
+    }
+
+    void DisplayCardNames() {
+        string dText = detectivePosition.transform.GetChild(0).ToString();
+        int foundB = dText.IndexOf("(");
+        deteciveCardText.text = dText.Substring(0, foundB);
+
+        dText = artistPosition.transform.GetChild(0).ToString();
+        foundB = dText.IndexOf("(");
+        artistCardText.text = dText.Substring(0, foundB);
+
+        dText = surgeonPosition.transform.GetChild(0).ToString();
+        foundB = dText.IndexOf("(");
+       surgeonCardText.text = dText.Substring(0, foundB);
+
+        dText = priestPosition.transform.GetChild(0).ToString();
+        foundB = dText.IndexOf("(");
+        priestCardText.text = dText.Substring(0, foundB);
     }
 }

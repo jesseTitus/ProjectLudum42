@@ -67,9 +67,9 @@ MonoBehaviour:
   - {fileID: 1081122272142878, guid: 5ac38a99b58f5d8439d720a67e0bea71, type: 2}
   - {fileID: 1081122272142878, guid: 0356439b690305c40bc1b3449ea9bcaa, type: 2}
   - {fileID: 1081122272142878, guid: 40aff6ff72547cb48aff8400dffa91d0, type: 2}
-  - {fileID: 1081122272142878, guid: 76a07e3124b029144b497d078656c08b, type: 2}
+  - {fileID: 1671860779530210, guid: 76a07e3124b029144b497d078656c08b, type: 2}
   artistDeck:
-  - {fileID: 1081122272142878, guid: 0bf7a65928859ce45931c7eceeed1c86, type: 2}
+  - {fileID: 1975171611815036, guid: ea968252168b1ad47bf21b880d4623dc, type: 2}
   - {fileID: 1081122272142878, guid: b012fdaa5a8caa54ca250296d4089dd1, type: 2}
   surgeonDeck:
   - {fileID: 1081122272142878, guid: ffe5e384dbd83474290c6e45243e0926, type: 2}
@@ -82,4 +82,6 @@ MonoBehaviour:
   artistPosition: {fileID: 0}
   surgeonPosition: {fileID: 0}
   priestPosition: {fileID: 0}
+  isWomanDied: 0
+  hearLedwell: 0
   bossHitPoints: 5
